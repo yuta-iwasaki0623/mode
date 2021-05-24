@@ -754,11 +754,60 @@ function twentytwenty_get_elements_array() {
 	return apply_filters( 'twentytwenty_get_elements_array', $elements );
 }
 
+function metadata() {
+  $root = get_template_directory_uri();
+  $url =  get_the_permalink();
+  $headcustomtag =<<<EOM
+<meta property="og:url" content="$url" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="東京・新宿で脱毛ならmode Shohei" />
+  <meta property="og:description" content="mode Shohei（モードショーヘイ）は日本一“抜ける”と“安さ”を保証する複合型エステサロンです。使命を全うするため、最高級の美容機器を最安値で提供する、史上最高の複合サロンを新宿御苑にオープンしました。皆さまのご来店、心よりお待ちしております。他店より1円でも高ければ、遠慮なくご相談ください。" />
+  <meta property="og:site_name" content="mode Shohei" />
+  <meta property="og:image" content="$root/assets/img/ogp.jpg" />
+EOM;
+  echo $headcustomtag;
+}
+
+function add_css_js() {
+  if (is_page('lp')) {
+    wp_enqueue_style('aos', 'https://unpkg.com/aos@2.3.1/dist/aos.css');
+    wp_enqueue_style('fancybox', 'https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css');
+    wp_enqueue_style('slick', '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css');
+    wp_enqueue_style('slick-theme', '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css');
+    wp_enqueue_style('modaal', '//cdn.jsdelivr.net/npm/modaal@0.4.4/dist/css/modaal.min.css');
+    wp_enqueue_style('import', get_template_directory_uri().'/assets/css/import.css' );
+    wp_enqueue_script('main', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js');
+    wp_enqueue_script('tweenMax', '//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js');
+    wp_enqueue_script('fontawesome', 'https://kit.fontawesome.com/7707f3ad0e.js');
+    wp_enqueue_script('matchHeight-min', get_template_directory_uri().'/assets/js/matchHeight-min.js');
+    wp_enqueue_script('aos', 'https://unpkg.com/aos@2.3.1/dist/aos.js');
+    wp_enqueue_script('fancybox', 'https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js');
+    wp_enqueue_script('slick', '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js');
+    wp_enqueue_script('modaal', '//cdn.jsdelivr.net/npm/modaal@0.4.4/dist/js/modaal.min.js');
+    wp_enqueue_script('parallax', get_template_directory_uri().'/assets/js/parallax/parallax.min.js');
+    wp_enqueue_script('rellax', get_template_directory_uri().'/assets/js/rellax/rellax.min.js');
+    wp_enqueue_script('inview', get_template_directory_uri().'/assets/js/inview/jquery.inview.min.js');
+    wp_enqueue_script('da', get_template_directory_uri().'/assets/js/main.js');  
+  }
+}
+
+
+function wp_favicon_delete(){
+  exit;
+}
+add_action('do_faviconico', "wp_favicon_delete");
+
+// 関数名add_scripts()を表側で呼び出す
+add_action('wp_head', 'metadata');
+add_action('wp_enqueue_scripts', 'add_css_js');
+// generatorの削除
+remove_action('wp_head', 'wp_generator');
+
 // WordPressの管理画面ログインURLを変更
-define( 'LOGIN_CHANGE_PAGE', 'login-qwertyui.php' );
-add_action( 'login_init', 'login_change_init' );
-add_filter( 'site_url', 'login_change_site_url', 10, 4 );
-add_filter( 'wp_redirect', 'login_change_wp_redirect', 10, 2 );
+define('LOGIN_CHANGE_PAGE', 'login-qwertyui.php' );
+add_action('login_init', 'login_change_init' );
+add_filter('site_url', 'login_change_site_url', 10, 4 );
+add_filter('wp_redirect', 'login_change_wp_redirect', 10, 2 );
 
 // WordPressの管理画面ログインURLを変更
 define( 'LOGIN_CHANGE_PAGE', 'login-test.php' );
