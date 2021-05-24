@@ -1696,12 +1696,7 @@ get_header();
   <div class="cnt">
     <ul class="footerSnsUl flex mb30 justCenter">
       <li>
-        <a href="" target="_blank">
-          <i class="fab fa-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a href="" target="_blank">
+        <a href="https://instagram.com/mode_shohei?utm_medium=copy_link" target="_blank">
           <i class="fab fa-instagram"></i>
         </a>
       </li>
